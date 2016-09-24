@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -17,3 +18,6 @@ class Article(models.Model):
 
 	class Meta:
 		ordering = ['-published']
+
+	def get_absolute_url(self):
+		return reverse('news:article-detail', kwargs={'pk': self.id})
