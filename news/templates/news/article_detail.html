@@ -4,5 +4,21 @@
 <h1>{{ object.title }}</h1>
 <p>{{ object.published }}</p>
 <p>{{ object.content | safe }}</p>
+<div>		
+	<div>
+			<form action="/article/{{object.slug}}/comment" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="OK">
+			</form>
+	</div>
+<div>
+{% for comment in comments %}
+		<div>
+			<b>{{ comment.text }}</b> <em>{{ comment.published }} </em>
+		</div>
+	</div>
+</div>
+{% endfor %}
 
 {% endblock %}

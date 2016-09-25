@@ -28,3 +28,11 @@ class Article(models.Model):
 		if not self.slug:
 			self.slug = slugify(unidecode(self.title))
 		super(Article, self).save(*args, **kwargs)
+
+class Comment(models.Model):
+	text = models.CharField(max_length=200)
+	published = models.DateTimeField(auto_now_add=True)
+	news_article = models.ForeignKey(Article)
+
+	class Meta:
+		ordering = ['-published']
