@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>{{ object.title }}</h1>
+<p><b>Author</b>: {{ object.author.username }}</p>
 <p>{{ object.published }}</p>
 <p>{{ object.content | safe }}</p>
 <div>
