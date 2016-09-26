@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 from .forms import CommentForm, ArticleForm
 
@@ -29,18 +30,10 @@ def comment(request, slug):
 			comment.save()
 	return redirect(article, slug)
 
-@user_passes_test(lambda user: user.is_staff)
-def add_article(request):
-	if request.method == 'POST':
-		form = ArticleForm(request.POST)
+class ArticleCreateView(UserPassesTestMixin, CreateView):
+	model = Article
+	fields = ['title', 'content']
+	template_name_suffix = '_create_form'
 
-		if form.is_valid():
-			article = Article(title=request.POST['title'], content=request.POST['content'], author=request.user)
-			article.save()
-
-			return redirect(article, article.slug)
-
-	else:
-		form = ArticleForm()
-
-	return render(request, 'news/add_article.html', {'form': form})
+	def test_func(self):
+		return self.request.user.is_staff

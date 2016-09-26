@@ -7,5 +7,5 @@ urlpatterns = [
 	url(r'^$', views.ArticleListView.as_view(), name='article-list'),
 	url(r'^article/(?P<slug>[-\w]+)/$', views.ArticleDetailView.as_view(), name='article-detail'),
 	url(r'^article/(?P<slug>[-\w]+)/comment$', views.comment, name='comment'),
-	url(r'^article/add$', views.add_article, name='add-article'),
+	url(r'^addarticle/?$', views.ArticleCreateView.as_view(), name='add-article'),
 ]
