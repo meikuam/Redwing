@@ -8,12 +8,15 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from ckeditor.fields import RichTextField
 
+from django.contrib.auth.models import User
+
 @python_2_unicode_compatible
 class Article(models.Model):
 	title = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
 	content = RichTextField()
 	published = models.DateTimeField(auto_now_add=True)
+	author = models.ForeignKey(User, default=1)
 
 	def __str__(self):
 		return self.title

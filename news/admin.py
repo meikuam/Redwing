@@ -5,6 +5,6 @@ from .models import Comment
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-	exclude = ('slug', )
+	exclude = ('slug', 'author')
 
 admin.site.register(Comment)
