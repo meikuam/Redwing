@@ -29,11 +29,15 @@ class ArticleDetailView(DetailView):
 
 class ArticleCreateView(UserPassesTestMixin, CreateView):
 	model = Article
-	fields = ['title', 'content']
+	fields = ['title', 'category', 'content']
 	template_name_suffix = '_create_form'
 
 	def test_func(self):
 		return self.request.user.is_staff
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super(ArticleCreateView, self).form_valid(form)
 
 @login_required(redirect_field_name=None, login_url='/accounts/login/')
 def comment(request, slug):

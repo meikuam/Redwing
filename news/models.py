@@ -11,9 +11,9 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 
 class Category(models.Model):
-        name = models.CharField(max_length=50)
-        def __str__(self):
-                return self.name
+		name = models.CharField(max_length=50)
+		def __str__(self):
+			return self.name
 
 @python_2_unicode_compatible
 class Article(models.Model):
@@ -21,7 +21,7 @@ class Article(models.Model):
 	slug = models.SlugField(unique=True)
 	content = RichTextField()
 	published = models.DateTimeField(auto_now_add=True)
-	author = models.ForeignKey(User, default=1)
+	author = models.ForeignKey(User)
 	category = models.ForeignKey(Category)
 
 	def __str__(self):
