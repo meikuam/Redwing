@@ -39,6 +39,7 @@ class Article(models.Model):
 		super(Article, self).save(*args, **kwargs)
 
 class Comment(models.Model):
+	author = models.ForeignKey(User, default=1)
 	text = models.CharField(max_length=200)
 	published = models.DateTimeField(auto_now_add=True)
 	news_article = models.ForeignKey(Article)

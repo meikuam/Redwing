@@ -15,7 +15,7 @@
 <div>
 	{% for comment in comments %}
 		<div>
-			<b>{{ comment.text }}</b> <em>{{ comment.published }} </em>
+			<b>{{ comment.author }}</b> {{ comment.text }} <em>{{ comment.published }} </em>
 		</div>
 	{% endfor %}
 </div>
