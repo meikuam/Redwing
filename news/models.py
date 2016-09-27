@@ -10,6 +10,11 @@ from ckeditor.fields import RichTextField
 
 from django.contrib.auth.models import User
 
+class Category(models.Model):
+        name = models.CharField(max_length=50)
+        def __str__(self):
+                return self.name
+
 @python_2_unicode_compatible
 class Article(models.Model):
 	title = models.CharField(max_length=200)
@@ -17,6 +22,7 @@ class Article(models.Model):
 	content = RichTextField()
 	published = models.DateTimeField(auto_now_add=True)
 	author = models.ForeignKey(User, default=1)
+	category = models.ForeignKey(Category)
 
 	def __str__(self):
 		return self.title
@@ -39,3 +45,4 @@ class Comment(models.Model):
 
 	class Meta:
 		ordering = ['-published']
+
