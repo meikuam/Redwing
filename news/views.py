@@ -45,7 +45,7 @@ def comment(request, slug):
 	if request.method == 'POST': 
 		form = CommentForm(request.POST)
 		if form.is_valid():
-			comment = Comment(text=request.POST.get("text", ""), news_article=article)
+			comment = Comment(author=request.user, text=request.POST.get("text", ""), news_article=article)
 			comment.save()
 	return redirect(article, slug)
 
