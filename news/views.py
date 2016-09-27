@@ -14,15 +14,15 @@ from django.contrib.auth.decorators import login_required
 
 class ArticleListView(ListView):
 	model = Article
-        def get_context_data(self, **kwargs):
-                context = super(ArticleListView, self).get_context_data(**kwargs)
-                context['categories'] =  Category.objects.all()
-                return context
+	def get_context_data(self, **kwargs):
+		context = super(ArticleListView, self).get_context_data(**kwargs)
+		context['categories'] =  Category.objects.all()
+		return context
 
 class ArticleDetailView(DetailView):
 	model = Article
 	def get_context_data(self, **kwargs):
-                context = super(ArticleDetailView, self).get_context_data(**kwargs)
+		context = super(ArticleDetailView, self).get_context_data(**kwargs)
 		context['form'] = CommentForm()
 		context['comments'] = Comment.objects.filter(news_article=self.object)
 		return context
@@ -46,9 +46,9 @@ def comment(request, slug):
 	return redirect(article, slug)
 
 def category(request, category_id):
-    categories = Category.objects.all()
-    category = get_object_or_404(Category, pk=category_id)
-    article_list_by_category = Article.objects.filter(category=category)
-    context = { 'object_list': article_list_by_category, 'categories': categories }
-    print article_list_by_category
-    return render(request, 'news/article_list.html', context)
+	categories = Category.objects.all()
+	category = get_object_or_404(Category, pk=category_id)
+	article_list_by_category = Article.objects.filter(category=category)
+	context = { 'object_list': article_list_by_category, 'categories': categories }
+	print article_list_by_category
+	return render(request, 'news/article_list.html', context)

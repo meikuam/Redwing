@@ -12,6 +12,6 @@ urlpatterns = [
 	url(r'^article/(?P<slug>[-\w]+)/comment$', views.comment, name='comment'),
 	url(r'^addarticle/?$', views.ArticleCreateView.as_view(), name='add-article'),
 	url(r'^category/(?P<category_id>[0-9]+)/$', views.category, name='category'),
-    url(r'^accounts/login/$', login, name='login'),
-    url(r'^accounts/register/$', CreateView.as_view(template_name='registration/register.html', form_class=UserCreationForm, success_url='/accounts/login/'))
+	url(r'^accounts/login/$', login, name='login'),
+	url(r'^accounts/register/$', CreateView.as_view(template_name='registration/register.html', form_class=UserCreationForm, success_url='/accounts/login/'))
 ]
