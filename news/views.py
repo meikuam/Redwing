@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from .forms import CommentForm, ArticleForm
+from .forms import CommentForm
 
 from .models import Article, Comment
 
@@ -21,6 +21,14 @@ class ArticleDetailView(DetailView):
 		context['comments'] = Comment.objects.filter(news_article=self.object)
 		return context
 
+class ArticleCreateView(UserPassesTestMixin, CreateView):
+	model = Article
+	fields = ['title', 'content']
+	template_name_suffix = '_create_form'
+
+	def test_func(self):
+		return self.request.user.is_staff
+
 def comment(request, slug):
 	article = get_object_or_404(Article, slug=slug)
 	if request.method == 'POST': 
@@ -29,11 +37,3 @@ def comment(request, slug):
 			comment = Comment(text=request.POST.get("text", ""), news_article=article)
 			comment.save()
 	return redirect(article, slug)
-
-class ArticleCreateView(UserPassesTestMixin, CreateView):
-	model = Article
-	fields = ['title', 'content']
-	template_name_suffix = '_create_form'
-
-	def test_func(self):
-		return self.request.user.is_staff
