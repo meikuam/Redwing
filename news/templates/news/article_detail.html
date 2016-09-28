@@ -16,7 +16,7 @@
 	{% for comment in comments %}
 		{% if comment.status == 'APP' or comment.author == user or user.is_staff %}
 			<div style="color:{% if comment.author == user and comment.status == "NEW" %}{{ "grey" }}{% endif %}">
-				<b>{{ comment.author }}</b> {{ comment.text }} <em>{{ comment.published }} </em>{% if comment.status == "REJ" %}<font color="red">{%if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% else %}{{ "Deleted" }}{% endif %}</font>{% endif %}
+				<b>{{ comment.author }}</b> {{ comment.text }} <em>{{ comment.published }} </em>{% if comment.status == "REJ" and not user.is_staff %}<font color="red">{%if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% else %}{{ "Deleted" }}{% endif %}</font>{% endif %}
 				{% if request.user.is_staff %}
 					<div>
 						<br/><b>Comment review</b><br/>
@@ -30,7 +30,6 @@
 								<input type="text" name="reviewer_comment" value="{% if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% endif %}">
 								<input type="submit" value="OK">
 							</form>
-						</div>
 					</div>
 				{% endif %}
 			</div>
