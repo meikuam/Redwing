@@ -1,0 +1,10 @@
+.cm-panel {
+	font-family: sans-serif;
+	background: black;
+	color: white;
+	padding: 5px 15px;
+}
+
+.cm-panel .new-article {
+	margin: 0 5px;
+}

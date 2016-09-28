@@ -25,11 +25,11 @@
 					</li>
 					<li class="divider"></li>
 					{% if user.is_authenticated %}
-					<li class="visible-sm">
+					<li class="visible-sm visible-xs">
 						<a href="{% url 'logout' %}" class="dropdown-toggle" data-toggle="dropdown">Logout</a>
 					</li>
 					{% else %}
-					<li class="visible-sm">
+					<li class="visible-sm visible-xs">
 						<a href="{% url 'login' %}" class="dropdown-toggle" data-toggle="dropdown">Log in</a>
 					</li>
 					{% endif %}
