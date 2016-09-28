@@ -10,10 +10,15 @@ from ckeditor.fields import RichTextField
 
 from django.contrib.auth.models import User
 
+@python_2_unicode_compatible
 class Category(models.Model):
 		name = models.CharField(max_length=50)
+
 		def __str__(self):
 			return self.name
+
+		def get_absolute_url(self):
+			return reverse('news:category', kwargs={'category_id': self.id})
 
 @python_2_unicode_compatible
 class Article(models.Model):

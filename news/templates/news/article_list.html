@@ -1,23 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Categories</h1>
-<ul>
-	{% for category in categories %}
-		<a href="/category/{{category.id}}/">
-			<li>{{ category.name }}</li>
-		</a>
-	{% endfor %}
-</ul>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-8">
+			{% for article in object_list %}
+				{% include 'news/article_list_item.html' with article=article %}
+				{% empty %}
+						<li>No articles yet.</li>
+			{% endfor %}
+		</div>
+		{% include 'news/sidebar.html' with categories=categories %}
+	</div>
+</div>
 
-<h1>Articles</h1>
-<ul>
-	{% for article in object_list %}
-		<a href="{{ article.get_absolute_url }}">
-			<li>{{ article.published|date }} - {{ article.title }}</li>
-			{% empty %}
-				<li>No articles yet.</li>
-		</a>
-	{% endfor %}
-</ul>
 {% endblock %}
