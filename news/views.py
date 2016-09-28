@@ -5,11 +5,15 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from .forms import CommentForm
+from .forms import CommentForm, CommentReviewForm
 
 from .models import Article, Comment, Category
 
 from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponseRedirect
+
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 class ArticleListView(ListView):
@@ -56,3 +60,19 @@ def category(request, category_id):
 	context = { 'object_list': article_list_by_category, 'categories': categories }
 	print article_list_by_category
 	return render(request, 'news/article_list.html', context)
+
+@staff_member_required
+def reviewcomment(request, comment_id):
+	comment = get_object_or_404(Comment, pk=comment_id)
+	if request.method == 'POST': 
+		form = CommentReviewForm(request.POST)
+		print request.POST['status']
+		print request.POST['reviewer_comment']
+		if form.is_valid():
+			print "yes its valid"
+			comment.status = request.POST['status']
+			comment.reviewer_comment = request.POST['reviewer_comment']
+			comment.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
