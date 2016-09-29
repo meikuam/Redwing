@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-	<div class="boxed  push-down-60">
+	<div class="boxed  push-down-20">
 		<div class="meta">
 			<div class="meta__container--without-image" style="padding: 0 20px">
 				<div class="row">
@@ -32,12 +32,25 @@
 	</div>
 </div>
 
-<div>
-	<form action="{% url 'news:comment' object.slug %}" method="post">
-		{% csrf_token %}
-		{{ form }}
-		<input type="submit" value="OK">
-	</form>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Comments</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5">
+			<div class="comment-box no-padding blank">
+				<div class="comment-upload">
+					<form action="{% url 'news:comment' object.slug %}" method="post">
+						{% csrf_token %}
+						{{ form.text }}
+						<input type="submit" value="Submit" class="btn btn-success green">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div>
 	{% for comment in comments %}
