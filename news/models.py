@@ -58,3 +58,6 @@ class Comment(models.Model):
 	class Meta:
 		ordering = ['-published']
 
+class ContentManagerCategory(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True})
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)

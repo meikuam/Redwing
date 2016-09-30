@@ -14,6 +14,6 @@ class CommentForm(forms.Form):
 
 class CommentReviewForm(forms.Form):
 	status = forms.ChoiceField(choices=COMMENT_STATUSES)
-	reviewer_comment = forms.CharField(max_length=200)
+	reviewer_comment = forms.CharField(max_length=200, required=False)
 
 
