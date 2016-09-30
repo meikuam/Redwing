@@ -5,12 +5,15 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from .forms import CommentForm
+from .forms import CommentForm, CommentReviewForm
 
-from .models import Article, Comment, Category
+from .models import Article, Comment, Category, ContentManagerCategory
 
 from django.contrib.auth.decorators import login_required
 
+from django.http import HttpResponseRedirect
+
+from django.contrib.admin.views.decorators import staff_member_required
 
 class ArticleListView(ListView):
 	model = Article
@@ -21,6 +24,7 @@ class ArticleListView(ListView):
 
 class ArticleDetailView(DetailView):
 	model = Article
+
 	def get_context_data(self, **kwargs):
 		context = super(ArticleDetailView, self).get_context_data(**kwargs)
 		context['form'] = CommentForm()
@@ -39,6 +43,13 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
 		form.instance.author = self.request.user
 		return super(ArticleCreateView, self).form_valid(form)
 
+	def get_form(self, **kwargs):
+		form = super(ArticleCreateView, self).get_form(**kwargs)
+		if not self.request.user.is_superuser:
+			categories = ContentManagerCategory.objects.filter(user=self.request.user).values("category")
+			form.fields['category'].queryset = Category.objects.filter(pk__in=categories)
+		return form
+
 @login_required(redirect_field_name=None, login_url='/accounts/login/')
 def comment(request, slug):
 	article = get_object_or_404(Article, slug=slug)
@@ -54,5 +65,17 @@ def category(request, category_id):
 	category = get_object_or_404(Category, pk=category_id)
 	article_list_by_category = Article.objects.filter(category=category)
 	context = { 'object_list': article_list_by_category, 'categories': categories }
-	print article_list_by_category
 	return render(request, 'news/article_list.html', context)
+
+@staff_member_required
+def reviewcomment(request, comment_id):
+	comment = get_object_or_404(Comment, pk=comment_id)
+	if request.method == 'POST': 
+		form = CommentReviewForm(request.POST)
+		if form.is_valid():
+			comment.status = request.POST['status']
+			comment.reviewer_comment = request.POST['reviewer_comment']
+			comment.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
