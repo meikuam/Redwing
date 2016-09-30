@@ -48,7 +48,21 @@ class Comment(models.Model):
 	text = models.CharField(max_length=200)
 	published = models.DateTimeField(auto_now_add=True)
 	news_article = models.ForeignKey(Article)
+	reviewer_comment = models.CharField(max_length=200, blank=True, null=True)
+	reviewer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='comment_reviewer')
+	NEW = 'NEW'
+	APPROVED = 'APP'
+	REJECTED = 'REJ'
+	COMMENT_STATUSES = (
+		(NEW, 'New'),
+		(APPROVED, 'Approved'),
+		(REJECTED, 'Rejected'),
+	)
+	status = models.CharField(max_length = 3, choices=COMMENT_STATUSES, default=NEW)
 
 	class Meta:
 		ordering = ['-published']
 
+class ContentManagerCategory(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True})
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)

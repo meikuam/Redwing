@@ -54,9 +54,26 @@
 </div>
 <div>
 	{% for comment in comments %}
-		<div>
-			<b>{{ comment.author }}</b> {{ comment.text }} <em>{{ comment.published }} </em>
-		</div>
+		{% if comment.status == 'APP' or comment.author == user or user.is_staff %}
+			<div style="color:{% if comment.author == user and comment.status == "NEW" %}{{ "grey" }}{% endif %}">
+				<b>{{ comment.author }}</b> {{ comment.text }} <em>{{ comment.published }} </em>{% if comment.status == "REJ" and not user.is_staff %}<font color="red">{%if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% else %}{{ "Deleted" }}{% endif %}</font>{% endif %}
+				{% if request.user.is_staff %}
+					<div>
+						<br/><b>Comment review</b><br/>
+							<form action="/reviewcomment/{{ comment.id }}/" method="post">
+								{% csrf_token %}
+								<select name="status" required>
+									<option disabled style="display:none;" {% if comment.status == "NEW" %} {{ "selected" }} {% endif %}>Pending</option>
+									<option value="APP" {% if comment.status == "APP" %} {{ "selected" }} {% endif %}>Approved</option>
+									<option value="REJ" {% if comment.status == "REJ" %} {{ "selected" }} {% endif %}>Rejected</option>
+								</select>
+								<input type="text" name="reviewer_comment" value="{% if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% endif %}">
+								<input type="submit" value="OK">
+							</form>
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
 	{% endfor %}
 </div>
 {% endblock %}
