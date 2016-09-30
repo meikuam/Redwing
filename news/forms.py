@@ -15,7 +15,6 @@ class CommentForm(forms.Form):
 		max_length=200,
 		widget=forms.Textarea(attrs={'rows': 4, 'cols': 40, 'placeholder': 'Write a comment...'})
 	)
-	text = forms.CharField(label='Comment', max_length=200)
 
 class CommentReviewForm(forms.Form):
 	status = forms.ChoiceField(choices=COMMENT_STATUSES)
