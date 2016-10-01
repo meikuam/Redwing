@@ -77,7 +77,9 @@
 	padding: 6px 15px;
 }
 
-.login-container {
+
+.login-container,
+.register-container {
 	position: relative;
 	margin: 10% auto;
 	max-width: 340px;
@@ -94,7 +96,8 @@
 	padding-bottom: 0 !important;
 }
 
-.login-container .loginbox {
+.login-container .loginbox,
+.register-container .registerbox {
 	position: relative;
 	width: 340px !important;
 	height: auto !important;
@@ -103,7 +106,8 @@
 	background-color: #fff !important;
 }
 
-.login-container .loginbox .loginbox-title {
+.login-container .loginbox .loginbox-title,
+.register-container .registerbox .registerbox-title {
 	position: relative;
 	width: 100%;
 	height: 35px;
@@ -115,12 +119,16 @@
 }
 
 .login-container .loginbox .loginbox-textbox,
+.register-container .registerbox .registerbox-textbox,
 .login-container .loginbox .login-error,
-.login-container .loginbox .loginbox-submit {
+.register-container .registerbox .errorlist,
+.login-container .loginbox .loginbox-submit,
+.register-container .registerbox .registerbox-submit {
 	padding: 10px 40px;
 }
 
-.login-container .loginbox .loginbox-textbox .form-control {
+.login-container .loginbox .loginbox-textbox .form-control,
+.register-container .registerbox .registerbox-textbox .form-control {
 	-webkit-border-radius: 3px !important;
 	-webkit-background-clip: padding-box !important;
 	-moz-border-radius: 3px !important;
@@ -130,7 +138,9 @@
 }
 
 .login-container .loginbox .loginbox-signup,
-.login-container .loginbox .loginbox-title {
+.login-container .loginbox .loginbox-title,
+.register-container .registerbox .registerbox-signup,
+.register-container .registerbox .registerbox-title {
 	text-align: center;
 	padding-top: 10px;
 }

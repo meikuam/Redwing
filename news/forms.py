@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from ckeditor.widgets import CKEditorWidget
 
 from .models import Article
@@ -33,4 +33,23 @@ class LoginForm(AuthenticationForm):
 		widget=forms.PasswordInput(
 			attrs={'class': 'form-control', 'placeholder': 'Password'}
 		)
+	)
+
+class RegisterForm(UserCreationForm):
+	username = forms.CharField(
+		max_length=30,
+		widget=forms.TextInput(
+			attrs={'class': 'form-control', 'placeholder': 'Username'}
+		)
+	)
+
+	password1 = forms.CharField(
+		widget=forms.PasswordInput(
+			attrs={'class': 'form-control', 'placeholder': 'Password'}
+		),
+	)
+	password2 = forms.CharField(
+		widget=forms.PasswordInput(
+			attrs={'class': 'form-control', 'placeholder': 'Confirm password'}
+		),
 	)
