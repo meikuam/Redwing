@@ -5,6 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
+from django import forms
 from .forms import CommentForm, CommentReviewForm
 
 from .models import Article, Comment, Category, ContentManagerCategory
@@ -48,6 +49,9 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
 		if not self.request.user.is_superuser:
 			categories = ContentManagerCategory.objects.filter(user=self.request.user).values("category")
 			form.fields['category'].queryset = Category.objects.filter(pk__in=categories)
+
+		form.fields['title'].widget.attrs['class'] = 'form-control'
+		form.fields['category'].widget.attrs['class'] = 'form-control'
 		return form
 
 @login_required(redirect_field_name=None, login_url='/accounts/login/')
