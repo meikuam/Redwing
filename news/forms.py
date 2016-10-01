@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from ckeditor.widgets import CKEditorWidget
 
 from .models import Article
@@ -19,3 +20,17 @@ class CommentForm(forms.Form):
 class CommentReviewForm(forms.Form):
 	status = forms.ChoiceField(choices=COMMENT_STATUSES)
 	reviewer_comment = forms.CharField(max_length=200, required=False)
+
+class LoginForm(AuthenticationForm):
+	username = forms.CharField(
+		max_length=30,
+		widget=forms.TextInput(
+			attrs={'class': 'form-control', 'placeholder': 'Username'}
+		)
+	)
+	password = forms.CharField(
+		max_length=30,
+		widget=forms.PasswordInput(
+			attrs={'class': 'form-control', 'placeholder': 'Password'}
+		)
+	)
