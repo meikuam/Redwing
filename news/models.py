@@ -67,6 +67,7 @@ class Comment(models.Model):
 	class Meta:
 		ordering = ['-published']
 
+
 class ContentManagerCategory(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True})
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -77,3 +78,10 @@ class ContentManagerCategory(models.Model):
 	class Meta:
 		verbose_name = "Content manager category"
 		verbose_name_plural = "Content manager categories"
+
+
+
+class Like(models.Model):
+	article = models.ForeignKey(Article)
+	author = models.ForeignKey(User)
+	time_stamp = models.DateTimeField(auto_now_add=True)

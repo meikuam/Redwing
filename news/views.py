@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView
 from django import forms
 from .forms import CommentForm, CommentReviewForm
 
-from .models import Article, Comment, Category, ContentManagerCategory
+from .models import Article, Comment, Category, ContentManagerCategory, Like
 
 from django.contrib.auth.decorators import login_required
 
@@ -30,6 +30,8 @@ class ArticleDetailView(DetailView):
 		context = super(ArticleDetailView, self).get_context_data(**kwargs)
 		context['form'] = CommentForm()
 		context['comments'] = Comment.objects.filter(news_article=self.object)
+		context['likes'] = Like.objects.filter(article=self.object).__len__()
+		context['liked'] = 'True' if Like.objects.filter(article=self.object, author=self.request.user).__len__() != 0 else 'False'
 		return context
 
 class ArticleCreateView(UserPassesTestMixin, CreateView):
@@ -83,3 +85,13 @@ def reviewcomment(request, comment_id):
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+def like(request, slug):
+	article = get_object_or_404(Article, slug=slug)
+	if request.method == 'POST':
+		like_ = Like.objects.filter(article=article, author=request.user)
+		if like_.__len__() == 0:
+			like_ = Like(article=article, author=request.user)
+			like_.save()
+		else:
+			like_.delete()
+	return redirect(article, slug)
