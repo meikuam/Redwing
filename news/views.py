@@ -30,8 +30,8 @@ class ArticleDetailView(DetailView):
 		context = super(ArticleDetailView, self).get_context_data(**kwargs)
 		context['form'] = CommentForm()
 		context['comments'] = Comment.objects.filter(news_article=self.object)
-		context['likes'] = Like.objects.filter(article=self.object).__len__()
-		context['liked'] = 'True' if Like.objects.filter(article=self.object, author=self.request.user).__len__() != 0 else 'False'
+		context['likes'] = len(Like.objects.filter(article=self.object))
+		context['liked'] = 'True' if len(Like.objects.filter(article=self.object, author=self.request.user)) != 0 else 'False'
 		return context
 
 class ArticleCreateView(UserPassesTestMixin, CreateView):
@@ -85,11 +85,12 @@ def reviewcomment(request, comment_id):
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+@login_required(redirect_field_name=None, login_url='/accounts/login/')
 def like(request, slug):
 	article = get_object_or_404(Article, slug=slug)
 	if request.method == 'POST':
 		like_ = Like.objects.filter(article=article, author=request.user)
-		if like_.__len__() == 0:
+		if len(like_) == 0:
 			like_ = Like(article=article, author=request.user)
 			like_.save()
 		else:

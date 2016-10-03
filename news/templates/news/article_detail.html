@@ -25,9 +25,9 @@
 					<h1><a href="#">{{ article.title }}</a></h1>
 					{{ article.content|safe }}
 				</div>
-				<p>This artickle habe {{likes}} tricks</p>
-				<p>{{liked}}</p>
-				<form action="like" method="POST">
+				<p>This article has {{ likes }} tricks</p>
+				<p>{{ liked }}</p>
+				<form action="{% url 'news:like' article.slug %}" method="POST">
 					{% csrf_token %}
 					<input type="submit" value="trick">
 				</form>
