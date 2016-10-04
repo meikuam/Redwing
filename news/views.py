@@ -31,7 +31,13 @@ class ArticleDetailView(DetailView):
 		context['form'] = CommentForm()
 		context['comments'] = Comment.objects.filter(news_article=self.object)
 		context['likes'] = len(Like.objects.filter(article=self.object))
-		context['liked'] = 'True' if len(Like.objects.filter(article=self.object, author=self.request.user)) != 0 else 'False'
+		if self.request.user.is_authenticated():
+			if len(Like.objects.filter(article=self.object, author=self.request.user)) != 0:
+				context['liked'] = 'True'
+			else: 
+				context['liked'] = 'False'
+		else: 
+			context['liked'] = 'False'
 		return context
 
 class ArticleCreateView(UserPassesTestMixin, CreateView):
