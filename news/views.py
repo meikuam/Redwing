@@ -7,6 +7,9 @@ from django.views.generic.edit import CreateView
 
 from django import forms
 from .forms import CommentForm, CommentReviewForm
+from news.forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 from .models import Article, Comment, Category, ContentManagerCategory
 
@@ -15,6 +18,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 from django.contrib.admin.views.decorators import staff_member_required
+
+from django.contrib.auth import authenticate, login
 
 class ArticleListView(ListView):
 	model = Article
@@ -82,4 +87,13 @@ def reviewcomment(request, comment_id):
 			comment.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def register(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+			login(request, new_user)
+			return HttpResponseRedirect("/")
+	return CreateView.as_view(template_name='registration/register.html', form_class=RegisterForm, success_url='/accounts/login/')(request)
 
