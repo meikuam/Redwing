@@ -24,7 +24,7 @@ from news.forms import LoginForm, RegisterForm
 urlpatterns = [
 	url(r'^', include('news.urls')),
 	url(r'^admin/', admin.site.urls),
-	url(r'^accounts/login/$', login, {'authentication_form': LoginForm}, name='login'),
+	url(r'^accounts/login/$', login, {'authentication_form': LoginForm, 'redirect_authenticated_user': True}, name='login'),
 
 	url(r'^accounts/logout/$', logout, {'next_page': '/'}, name='logout'),
 	url(r'^accounts/register/$', CreateView.as_view(template_name='registration/register.html', form_class=RegisterForm, success_url='/accounts/login/'))
