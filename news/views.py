@@ -12,9 +12,11 @@ from .models import Article, Comment, Category, ContentManagerCategory, Like
 
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 from django.contrib.admin.views.decorators import staff_member_required
+
+# import json
 
 class ArticleListView(ListView):
 	model = Article
@@ -33,11 +35,11 @@ class ArticleDetailView(DetailView):
 		context['likes'] = len(Like.objects.filter(article=self.object))
 		if self.request.user.is_authenticated():
 			if len(Like.objects.filter(article=self.object, author=self.request.user)) != 0:
-				context['liked'] = 'True'
+				context['liked'] =  True
 			else: 
-				context['liked'] = 'False'
+				context['liked'] = False
 		else: 
-			context['liked'] = 'False'
+			context['liked'] = False
 		return context
 
 class ArticleCreateView(UserPassesTestMixin, CreateView):
@@ -101,4 +103,9 @@ def like(request, slug):
 			like_.save()
 		else:
 			like_.delete()
-	return redirect(article, slug)
+
+	if request.is_ajax():
+		resp = {"likes" : str(len(Like.objects.filter(article=article)))}
+		return JsonResponse(resp)
+	else:
+		return redirect(article, slug)

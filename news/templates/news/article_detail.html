@@ -2,39 +2,53 @@
 
 {% block content %}
 <div class="container">
-	<div class="boxed  push-down-20">
+	<div class="boxed push-down-20">
 		<div class="meta">
 			<div class="meta__container--without-image" style="padding: 0 20px">
 				<div class="row">
-					<div class="col-xs-12  col-sm-8">
+					<div class="col-xs-12 col-sm-8">
 						<div class="meta__info">
 							<span class="meta__author">
 								<img src="https://user-profile.s3.envato.com/files/50627171/avatar%20small.png" alt="Meta avatar" width="30" height="30"> <a href="#">{{ object.author.username }}</a> in <a href="#">{{ object.category }}</a>
 							</span>
 						</div>
 					</div>
-					<div class="col-xs-12  col-sm-4">
+					<div class="col-xs-12 col-sm-4">
 						<span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; {{ article.published|date }}</span>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-10  col-xs-offset-1  col-md-8  col-md-offset-2  push-down-60">
+			<div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 push-down-60">
 				<div class="post-content">
 					<h1><a href="#">{{ article.title }}</a></h1>
 					{{ article.content|safe }}
 				</div>
-				<p>This article has {{ likes }} tricks</p>
-				<p>{{ liked }}</p>
-				<form action="{% url 'news:like' article.slug %}" method="POST">
+				<p>This article has <span id="likes-num"> {{ likes }} </span> tricks </p>
+				<form id="like-form" action="{% url 'news:like' article.slug %}" method="POST">
 					{% csrf_token %}
-					<input type="submit" value="trick">
+					<button id="like-btn" type="submit" class="btn {% if liked %} btn-primary {% endif %}">Like</button>
 				</form>
 				{% include 'news/comment_section.html' with comments=comments %}
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$('#like-form').on('submit', function(e) {
+		e.preventDefault();
+		$('#like-btn').toggleClass('btn-primary');
+		$.ajax({
+			method: 'POST',
+			url: '{% url 'news:like' article.slug %}',
+			data: $(this).serialize()
+		})
+			.done(function( msg ) {
+				$('#likes-num').text(msg.likes);
+			});
+	});
+</script>
 
 {% endblock %}
