@@ -77,3 +77,8 @@ class ContentManagerCategory(models.Model):
 	class Meta:
 		verbose_name = "Content manager category"
 		verbose_name_plural = "Content manager categories"
+
+class Like(models.Model):
+	article = models.ForeignKey(Article)
+	author = models.ForeignKey(User)
+	published = models.DateTimeField(auto_now_add=True)
