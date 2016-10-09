@@ -36,6 +36,7 @@
 	</div>
 </div>
 
+{% if user.is_authenticated %} 
 <script type="text/javascript">
 	$('#like-form').on('submit', function(e) {
 		e.preventDefault();
@@ -50,5 +51,6 @@
 			});
 	});
 </script>
+{% endif %}
 
 {% endblock %}
