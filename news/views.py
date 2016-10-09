@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -7,16 +10,15 @@ from django.views.generic.edit import CreateView
 
 from django import forms
 from .forms import CommentForm, CommentReviewForm
+from news.forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 from .models import Article, Comment, Category, ContentManagerCategory, Like
-
-from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 from django.contrib.admin.views.decorators import staff_member_required
-
-# import json
 
 class ArticleListView(ListView):
 	model = Article
@@ -71,6 +73,8 @@ def comment(request, slug):
 		form = CommentForm(request.POST)
 		if form.is_valid():
 			comment = Comment(author=request.user, text=request.POST.get("text", ""), news_article=article)
+			if request.user.is_staff:
+				comment.status = "APP"
 			comment.save()
 	return redirect(article, slug)
 
@@ -92,6 +96,15 @@ def reviewcomment(request, comment_id):
 			comment.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def register(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+			login(request, new_user)
+			return HttpResponseRedirect("/")
+	return CreateView.as_view(template_name='registration/register.html', form_class=RegisterForm, success_url='/accounts/login/')(request)
 
 @login_required(redirect_field_name=None, login_url='/accounts/login/')
 def like(request, slug):
