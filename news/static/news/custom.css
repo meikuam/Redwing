@@ -209,3 +209,15 @@
 .new-article-title {
 	margin-top: 15px;
 }
+
+#like-btn {
+	font-size: 1.25em;
+	margin-bottom: 15px;
+	outline: none;
+}
+
+#like-btn i {
+	position: relative;
+	top: 2px;
+	margin-right: 2px;
+}

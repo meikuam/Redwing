@@ -25,10 +25,12 @@
 					<h1><a href="#">{{ article.title }}</a></h1>
 					{{ article.content|safe }}
 				</div>
-				<p>This article has <span id="likes-num"> {{ likes }} </span> tricks </p>
 				<form id="like-form" action="{% url 'news:like' article.slug %}" method="POST">
 					{% csrf_token %}
-					<button id="like-btn" type="submit" class="btn {% if liked %} btn-primary {% endif %}">Like</button>
+					<button id="like-btn" type="submit" class="btn btn-default {% if liked %} btn-primary {% endif %}">
+						<i class="glyphicon {% if liked %} glyphicon-heart {% else %} glyphicon-heart-empty {% endif %}"></i>
+						Like <span>{{ likes }}</span>
+					</button>
 				</form>
 				{% include 'news/comment_section.html' with comments=comments %}
 			</div>
@@ -41,13 +43,17 @@
 	$('#like-form').on('submit', function(e) {
 		e.preventDefault();
 		$('#like-btn').toggleClass('btn-primary');
+
+		$('#like-btn > i')
+			.toggleClass('glyphicon-heart glyphicon-heart-empty');
+
 		$.ajax({
 			method: 'POST',
 			url: '{% url 'news:like' article.slug %}',
 			data: $(this).serialize()
 		})
 			.done(function( msg ) {
-				$('#likes-num').text(msg.likes);
+				$('#like-btn > span').text(msg.likes);
 			});
 	});
 </script>
