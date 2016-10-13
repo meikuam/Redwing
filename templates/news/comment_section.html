@@ -49,28 +49,26 @@
                                 </div>
                             </div>
                             {% if request.user.is_staff %}
-                                <div>
-                                    <b>Comment review</b><br/>
-                                    <form action="/reviewcomment/{{ comment.id }}/" method="post">
-                                        {% csrf_token %}
-                                        <select name="status" required>
-                                            <option disabled style="display:none;" {% if comment.status == "NEW" %}
-                                                {{ "selected" }} {% endif %}>Pending
-                                            </option>
-                                            <option value="APP" {% if comment.status == "APP" %}
-                                                {{ "selected" }} {% endif %}>Approved
-                                            </option>
-                                            <option value="REJ" {% if comment.status == "REJ" %}
-                                                {{ "selected" }} {% endif %}>Rejected
-                                            </option>
-                                        </select>
-                                        <input type="text" name="reviewer_comment" {% if not comment.reviewer_comment %}
-                                               style="display: none" {% endif %}value="
-
-                                                {% if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% endif %}">
-                                        <input type="submit" value="OK">
-                                    </form>
-                                </div>
+                            <div>
+                                <b>Comment review</b><br/>
+                                <form action="{% url 'news:review-comment' comment.id %}" method="post">
+                                    {% csrf_token %}
+                                    <select name="status" required>
+                                        <option disabled style="display:none;" {% if comment.status == "NEW" %}
+                                            {{ "selected" }} {% endif %}>Pending
+                                        </option>
+                                        <option value="APP" {% if comment.status == "APP" %}
+                                            {{ "selected" }} {% endif %}>Approved
+                                        </option>
+                                        <option value="REJ" {% if comment.status == "REJ" %}
+                                            {{ "selected" }} {% endif %}>Rejected
+                                        </option>
+                                    </select>
+                                    <input type="text" name="reviewer_comment" {% if not comment.reviewer_comment %}
+                                           style="display: none"{% endif %} value="{% if comment.reviewer_comment %}{{ comment.reviewer_comment }}{% endif %}">
+                                    <input type="submit" value="OK">
+                                </form>
+                            </div>
                             {% endif %}
                         </li>
                     {% endif %}
