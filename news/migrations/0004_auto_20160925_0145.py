@@ -4,14 +4,14 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 
-class Migration(migrations.Migration):
 
+class Migration(migrations.Migration):
     dependencies = [
         ('news', '0003_auto_20160925_0145'),
     ]
 
     operations = [
-	    migrations.AlterField(
+        migrations.AlterField(
             model_name='article',
             name='slug',
             field=models.SlugField(unique=True),

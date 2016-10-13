@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="register-container">
+        <div class="registerbox">
+            <div class="registerbox-title">SIGN UP</div>
+            {% if form.errors %}
+                {% if form.username.errors %} {{ form.username.errors }} {% endif %}
+                {% if form.password2.errors %} {{ form.password2.errors }} {% endif %}
+            {% endif %}
+            <form action="/accounts/register/" method="POST">
+                {% csrf_token %}
+                <div class="registerbox-textbox">
+                    {{ form.username }}
+                </div>
+                <div class="registerbox-textbox">
+                    {{ form.password1 }}
+                </div>
+                <div class="registerbox-textbox">
+                    {{ form.password2 }}
+                </div>
+                <div class="registerbox-submit">
+                    <input type="submit" class="btn btn-success btn-block green" value="Sign up">
+                </div>
+            </form>
+            <div class="registerbox-signup">
+                <a href="/accounts/login/">Already got account? Sign In</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

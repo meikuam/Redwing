@@ -3,21 +3,21 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-
 from django.template.defaultfilters import slugify
 
+
 def get_slug(apps, schema_editor):
-	Article = apps.get_model('news', 'Article')
-	for row in Article.objects.all():
-		row.slug = slugify(row.title)
-		row.save()
+    Article = apps.get_model('news', 'Article')
+    for row in Article.objects.all():
+        row.slug = slugify(row.title)
+        row.save()
+
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('news', '0002_article_slug'),
     ]
 
     operations = [
-    	migrations.RunPython(get_slug, reverse_code=migrations.RunPython.noop)
+        migrations.RunPython(get_slug, reverse_code=migrations.RunPython.noop)
     ]

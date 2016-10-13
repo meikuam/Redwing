@@ -2,13 +2,16 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
 class User(models.Model):
     login = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
     username = models.CharField(max_length=20)
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
+
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=50)
@@ -16,6 +19,7 @@ class NewsArticle(models.Model):
     date = models.DateTimeField('Date published')
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
 
 class Comment(models.Model):
     text = models.TextField()
@@ -32,7 +36,8 @@ class Comment(models.Model):
         (APPROVED, 'Approved'),
         (REJECTED, 'Rejected'),
     )
-    status = models.CharField(max_length = 3, choices=COMMENT_STATUSES, default=NEW)
+    status = models.CharField(max_length=3, choices=COMMENT_STATUSES, default=NEW)
+
 
 class Like(models.Model):
     date = models.DateTimeField('Date published')
@@ -42,6 +47,3 @@ class Like(models.Model):
 class ContentManagerCategories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-
-

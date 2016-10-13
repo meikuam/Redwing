@@ -16,16 +16,16 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from django.views.generic.edit import CreateView
 
-from news.forms import LoginForm
 from news import views
+from news.forms import LoginForm
 
 urlpatterns = [
-	url(r'^', include('news.urls')),
-	url(r'^admin/', admin.site.urls),
-	url(r'^accounts/login/$', login, {'authentication_form': LoginForm, 'redirect_authenticated_user': True}, name='login'),
+    url(r'^', include('news.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^accounts/login/$', login, {'authentication_form': LoginForm, 'redirect_authenticated_user': True},
+        name='login'),
 
-	url(r'^accounts/logout/$', logout, {'next_page': '/'}, name='logout'),
-	url(r'^accounts/register/$', views.register)
+    url(r'^accounts/logout/$', logout, {'next_page': '/'}, name='logout'),
+    url(r'^accounts/register/$', views.register)
 ]
