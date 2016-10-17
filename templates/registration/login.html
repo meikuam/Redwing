@@ -20,7 +20,11 @@
             {% if form.errors %}
                 <p class="login-error">Your username and password didn't match. Please try again.</p>
             {% endif %}
+            {% if next %}
+            <form method="post" action="{% url 'login' %}?next={{ next }}">
+            {% else %}
             <form method="post" action="{% url 'login' %}">
+            {% endif%}
                 {% csrf_token %}
                 <div class="loginbox-textbox">
                     {{ form.username }}

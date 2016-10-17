@@ -64,7 +64,7 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
         return form
 
 
-@login_required(redirect_field_name=None, login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def comment(request, slug):
     article = get_object_or_404(Article, slug=slug)
     if request.method == 'POST':
@@ -109,7 +109,7 @@ def register(request):
                               success_url='/accounts/login/')(request)
 
 
-@login_required(redirect_field_name=None, login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def like(request, slug):
     article = get_object_or_404(Article, slug=slug)
     if request.method == 'POST':
