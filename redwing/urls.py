@@ -17,8 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
-from news import views
-from news.forms import LoginForm
+from article import views
+from auth import LoginForm
 
 urlpatterns = [
     url(r'^', include('news.urls')),
