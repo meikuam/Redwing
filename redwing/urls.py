@@ -17,15 +17,18 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
-from article import views
-from auth import LoginForm
+#from article import views
+from auth.views import register
+from auth.forms import LoginForm
 
 urlpatterns = [
-    url(r'^', include('news.urls')),
+    url(r'^', include('article.urls')),
+    url(r'^', include('category.urls')),
+    url(r'^', include('feedback.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/login/$', login, {'authentication_form': LoginForm, 'redirect_authenticated_user': True},
         name='login'),
 
     url(r'^accounts/logout/$', logout, {'next_page': '/'}, name='logout'),
-    url(r'^accounts/register/$', views.register, name='register'),
+    url(r'^accounts/register/$', register, name='register'),
 ]
