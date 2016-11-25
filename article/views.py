@@ -24,7 +24,7 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         context['form'] = CommentForm()
-        context['comments'] = Comment.objects.filter(news_article=self.object)
+        context['comments'] = Comment.objects.filter(article_article=self.object)
         # context['comments'] = self.object_comment_set() #this string has been written by drozd
         context['likes'] = len(Like.objects.filter(article=self.object))
         if self.request.user.is_authenticated():

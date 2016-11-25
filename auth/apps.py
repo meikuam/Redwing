@@ -3,5 +3,6 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class NewsConfig(AppConfig):
+class AuthConfig(AppConfig):
     name = 'auth'
+    label = 'my.auth'

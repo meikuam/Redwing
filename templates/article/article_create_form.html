@@ -10,7 +10,7 @@
                         <h2 class="front-page-title new-article-title">
                             Create new article
                         </h2>
-                        <form action="{% url 'news:add-article' %}" method="post">
+                        <form action="{% url 'article:add-article' %}" method="post">
                             {% csrf_token %}
                             {{ form.media }}
                             <div class="form-group">

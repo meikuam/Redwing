@@ -25,7 +25,7 @@ class Article(models.Model):
         ordering = ['-published']
 
     def get_absolute_url(self):
-        return reverse('news:article-detail', kwargs={'slug': self.slug})
+        return reverse('article:article-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:

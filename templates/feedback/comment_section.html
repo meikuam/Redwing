@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="comment-box no-padding blank">
                     <div class="comment-upload">
-                        <form action="{% url 'news:comment' object.slug %}" method="post">
+                        <form action="{% url 'feedback:comment' object.slug %}" method="post">
                             {% csrf_token %}
                             {{ form.text }}
                             <input type="submit" value="Submit" class="btn btn-success green">
@@ -51,7 +51,7 @@
                             {% if request.user.is_staff %}
                             <div>
                                 <b>Comment review</b><br/>
-                                <form action="{% url 'news:review-comment' comment.id %}" method="post">
+                                <form action="{% url 'feedback:review-comment' comment.id %}" method="post">
                                     {% csrf_token %}
                                     <select name="status" required>
                                         <option disabled style="display:none;" {% if comment.status == "NEW" %}

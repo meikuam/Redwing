@@ -8,7 +8,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User, default=1)
     text = models.CharField(max_length=200)
     published = models.DateTimeField(auto_now_add=True)
-    news_article = models.ForeignKey(Article)
+    article_article = models.ForeignKey(Article)
     reviewer_comment = models.CharField(max_length=200, blank=True, null=True)
     reviewer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='comment_reviewer')
     NEW = 'NEW'

@@ -8,6 +8,6 @@ def category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     article_list_by_category = Article.objects.filter(category=category)
     context = {'object_list': article_list_by_category, 'categories': categories}
-    return render(request, 'news/article_list.html', context)
+    return render(request, 'templates/article/article_list.html', context)
 
 
