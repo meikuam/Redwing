@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^accounts/login/$', login,
         {'authentication_form': LoginForm,
          'redirect_authenticated_user': True},
-         name='login'),
+        name='login'),
     url(r'^accounts/logout/$', logout,
         {'next_page': '/'},
         name='logout'),
