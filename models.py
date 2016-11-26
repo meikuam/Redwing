@@ -25,11 +25,13 @@ class Comment(models.Model):
     text = models.TextField()
     date = models.DateTimeField('Date published')
     rejection_comment = models.CharField(max_length=200)
-    author = models.ForeignKey(User, null=True, 
-        on_delete=models.SET_NULL, 
+    author = models.ForeignKey(
+        User, null=True,
+        on_delete=models.SET_NULL,
         related_name='comment_author')
-    reviewer = models.ForeignKey(User, null=True, 
-        on_delete=models.SET_NULL, 
+    reviewer = models.ForeignKey(
+        User, null=True,
+        on_delete=models.SET_NULL,
         related_name='comment_reviewer')
     news_article = models.ForeignKey(NewsArticle, on_delete=models.CASCADE)
     NEW = 'NEW'
@@ -40,7 +42,8 @@ class Comment(models.Model):
         (APPROVED, 'Approved'),
         (REJECTED, 'Rejected'),
     )
-    status = models.CharField(max_length=3, 
+    status = models.CharField(
+        max_length=3,
         choices=COMMENT_STATUSES, default=NEW)
 
 

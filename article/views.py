@@ -10,6 +10,7 @@ from .models import Article, Category
 
 class ArticleListView(ListView):
     model = Article
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
@@ -52,8 +53,8 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
         form = super(ArticleCreateView, self).get_form(**kwargs)
         if not self.request.user.is_superuser:
             categories = \
-                ContentManagerCategory.objects.filter(user=
-                self.request.user).values("category")
+                ContentManagerCategory.objects.filter(
+                    user=self.request.user).values("category")
             form.fields['category'].queryset = \
                 Category.objects.filter(pk__in=categories)
         form.fields['title'].widget.attrs['class'] = 'form-control'
