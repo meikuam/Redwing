@@ -52,9 +52,9 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
     def get_form(self, **kwargs):
         form = super(ArticleCreateView, self).get_form(**kwargs)
         if not self.request.user.is_superuser:
-            categories = \
-                ContentManagerCategory.objects.filter(
-                    user=self.request.user).values("category")
+            categories = ContentManagerCategory.objects.filter(
+                user=self.request.user
+            ).values("category")
             form.fields['category'].queryset = \
                 Category.objects.filter(pk__in=categories)
         form.fields['title'].widget.attrs['class'] = 'form-control'

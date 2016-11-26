@@ -12,7 +12,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}"/>
 </head>
 <body>
-{% include 'category/content_manager_panel.html' %}
+{% if user.is_staff %}
+    {% include 'category/content_manager_panel.html' %}
+{% endif %}
 {% include 'header.html' %}
 {% block content %}
 {% endblock %}
