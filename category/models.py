@@ -12,14 +12,18 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category:category', kwargs={'category_id': self.id})
+        return reverse('category:category',
+                       kwargs={'category_id': self.id})
 
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
+
 class ContentManagerCategory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True})
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             limit_choices_to={'is_staff': True})
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):

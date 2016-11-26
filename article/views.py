@@ -8,10 +8,8 @@ from feedback.forms import CommentForm
 from .models import Article, Category
 
 
-
 class ArticleListView(ListView):
     model = Article
-
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
@@ -24,11 +22,12 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         context['form'] = CommentForm()
-        context['comments'] = Comment.objects.filter(article_article=self.object)
-        # context['comments'] = self.object_comment_set() #this string has been written by drozd
+        context['comments'] = \
+            Comment.objects.filter(article_article=self.object)
         context['likes'] = len(Like.objects.filter(article=self.object))
         if self.request.user.is_authenticated():
-            if len(Like.objects.filter(article=self.object, author=self.request.user)) != 0:
+            if len(Like.objects.filter(article=self.object,
+                                       author=self.request.user)) != 0:
                 context['liked'] = True
             else:
                 context['liked'] = False
@@ -52,9 +51,11 @@ class ArticleCreateView(UserPassesTestMixin, CreateView):
     def get_form(self, **kwargs):
         form = super(ArticleCreateView, self).get_form(**kwargs)
         if not self.request.user.is_superuser:
-            categories = ContentManagerCategory.objects.filter(user=self.request.user).values("category")
-            form.fields['category'].queryset = Category.objects.filter(pk__in=categories)
-
+            categories = \
+                ContentManagerCategory.objects.filter(user=
+                self.request.user).values("category")
+            form.fields['category'].queryset = \
+                Category.objects.filter(pk__in=categories)
         form.fields['title'].widget.attrs['class'] = 'form-control'
         form.fields['category'].widget.attrs['class'] = 'form-control'
         return form

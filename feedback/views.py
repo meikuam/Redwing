@@ -7,19 +7,19 @@ from article.models import Article
 from feedback.models import Comment, Like
 
 
-
 @login_required(login_url='/accounts/login/')
 def comment(request, slug):
     article = get_object_or_404(Article, slug=slug)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = Comment(author=request.user, text=request.POST.get("text", ""), article_article=article)
+            comment = Comment(author=request.user,
+                              text=request.POST.get("text", ""),
+                              article_article=article)
             if request.user.is_staff:
                 comment.status = "APP"
             comment.save()
     return redirect(article, slug)
-
 
 
 @staff_member_required
@@ -32,7 +32,6 @@ def reviewcomment(request, comment_id):
             comment.reviewer_comment = request.POST['reviewer_comment']
             comment.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
 
 
 @login_required(login_url='/accounts/login/')

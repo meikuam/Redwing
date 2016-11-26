@@ -11,8 +11,10 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password1'])
             login(request, new_user)
             return HttpResponseRedirect("/")
-    return CreateView.as_view(template_name='registration/register.html', form_class=RegisterForm,
+    return CreateView.as_view(template_name='registration/register.html',
+                              form_class=RegisterForm,
                               success_url='/accounts/login/')(request)
