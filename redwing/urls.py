@@ -20,7 +20,6 @@ from django.contrib.auth.views import login, logout
 from auth.views import register
 from auth.forms import LoginForm
 
-
 urlpatterns = [
     url(r'^', include('article.urls')),
     url(r'^', include('category.urls')),
@@ -28,8 +27,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/login/$', login,
         {'authentication_form': LoginForm,
-        'redirect_authenticated_user': True},
-        name='login'),
+         'redirect_authenticated_user': True},
+         name='login'),
     url(r'^accounts/logout/$', logout,
         {'next_page': '/'},
         name='logout'),
