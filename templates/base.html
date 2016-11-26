@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redwing</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'news/style.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'news/fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts.css' %}"/>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="{% static 'news/js/main.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'news/custom.css' %}"/>
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}"/>
 </head>
 <body>
-{% include 'news/content_manager_panel.html' %}
-{% include 'news/header.html' %}
+{% include 'category/content_manager_panel.html' %}
+{% include 'header.html' %}
 {% block content %}
 {% endblock %}
 </body>
