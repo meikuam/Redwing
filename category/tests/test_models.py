@@ -11,12 +11,11 @@ class RegisterTestCase(TestCase):
     def test_categories(self):
         name = "test_cat1"
         cat = Category.objects.create(name=name)
-        print cat.__str__()
-        self.assertEquals(cat.__str__(), 'test_cat1')
+        self.assertEquals(str(cat), 'test_cat1')
         self.assertEquals(cat.get_absolute_url(),
                           '/category/' + str(cat.id) + '/')
 
     def test_cm_categories(self):
         cmc = ContentManagerCategory.objects.create(user=self.user,
                                                     category=self.category)
-        self.assertEquals(cmc.__str__(), 'test can post to Sports')
+        self.assertEquals(str(cmc), 'test can post to Sports')
