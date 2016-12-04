@@ -3,7 +3,6 @@ from django.test import TestCase, RequestFactory
 
 from django.contrib.auth.models import User
 from article.models import Article, Category
-from article.views import ArticleCreateView
 
 
 class ArticleViewsTestCase(TestCase):
@@ -14,9 +13,15 @@ class ArticleViewsTestCase(TestCase):
         self.user = User.objects.all()[0]
 
     def test_article_list(self):
+        articles = Article.objects.all()
+
         resp = self.client.get(reverse('article:article-list'))
+
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('object_list' in resp.context)
+        self.assertTrue(
+            article in resp.context['object_list'] for article in articles
+        )
         self.assertTemplateUsed(resp, 'article/article_list.html')
 
     def test_article_detail(self):
@@ -33,11 +38,13 @@ class ArticleViewsTestCase(TestCase):
 
     def test_article_create(self):
         url = reverse('article:add-article')
+        user = self.user
+        category = Category.objects.all()[0]
         args = {
-            'title': u'test',
+            'title': u'test-title',
             'content': u'test',
-            'author': self.user,
-            'category': Category.objects.all()[0]
+            'author': user.pk,
+            'category': category.pk
         }
 
         resp = self.client.get(url)
@@ -46,14 +53,17 @@ class ArticleViewsTestCase(TestCase):
         resp = self.client.post(url, kwargs=args)
         self.assertRedirects(resp, reverse('login') + '?next=' + url)
 
-        request = self.factory.get(url)
-        request.user = self.user
+        self.client.force_login(user)
 
-        resp = ArticleCreateView.as_view()(request)
+        resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
 
-        request = self.factory.post(url, args)
-        request.user = self.user
+        resp = self.client.post(url, args)
+        article = Article.objects.latest('published')
 
-        resp = ArticleCreateView.as_view()(request)
-        self.assertEqual(resp.status_code, 200)
+        self.assertRedirects(resp, reverse('article:article-detail',
+                             kwargs={'slug': article.slug}))
+        self.assertEqual(article.title, args['title'])
+        self.assertEqual(article.content, args['content'])
+        self.assertEqual(article.author, user)
+        self.assertEqual(article.category, category)
