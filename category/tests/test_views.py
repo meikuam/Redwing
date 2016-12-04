@@ -11,7 +11,6 @@ class CategoriesTestCase(TestCase):
         response = c.get(reverse('category:category',
                          kwargs={'category_id': cat.id}))
         self.assertEquals(response.status_code, 200)
-        print response.context['categories']
         self.assertTrue(cat in response.context['categories'])
         response = c.get(reverse('category:category',
                          kwargs={'category_id': 10}))
