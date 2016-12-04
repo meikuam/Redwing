@@ -30,4 +30,14 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(unidecode(self.title))
+
+        i = 1
+        slug = self.slug
+        while True:
+            if not Article.objects.filter(slug=slug).exists():
+                break
+            i += 1
+            slug = '%s-%d' % (self.slug, i)
+
+        self.slug = slug
         super(Article, self).save(*args, **kwargs)

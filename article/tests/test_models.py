@@ -21,3 +21,20 @@ class ArticleModelTestCase(TestCase):
         self.assertEqual(new_article.content, u'test')
         self.assertEqual(new_article.author, self.user)
         self.assertEqual(new_article.category, self.category)
+
+    def test_unique_slug(self):
+        new_article1 = Article.objects.create(
+            title=u'test',
+            content=u'test',
+            author=self.user,
+            category=self.category
+        )
+
+        new_article2 = Article.objects.create(
+            title=u'test',
+            content=u'test',
+            author=self.user,
+            category=self.category
+        )
+
+        self.assertTrue(new_article1.slug != new_article2.slug)
