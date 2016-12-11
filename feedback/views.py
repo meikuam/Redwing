@@ -46,6 +46,6 @@ def like(request, slug):
             like_.delete()
 
     if request.is_ajax():
-        resp = {"likes": str(len(Like.objects.filter(article=article)))}
+        resp = {"likes": len(Like.objects.filter(article=article))}
         return JsonResponse(resp)
     return redirect(article, slug)

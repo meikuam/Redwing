@@ -1,0 +1,39 @@
+[
+  {
+    "fields": {
+      "name": "Sports"
+    },
+    "model": "category.category",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "author": 1,
+      "category": 1,
+      "content": "<p>asdasdasd&nbsp;</p>",
+      "published": "2016-11-26T09:34:55.620Z",
+      "slug": "test",
+      "title": "Test"
+    },
+    "model": "article.article",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "date_joined": "2016-11-26T09:33:46.277Z",
+      "email": "asd@asd.ru",
+      "first_name": "",
+      "groups": [],
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "last_login": "2016-11-26T09:33:58.236Z",
+      "last_name": "",
+      "password": "pbkdf2_sha256$30000$WX8yYqxykurV$rY9+WiOFZUOKXd2x3PEWc8RqLoZUu+UTTWrKgs37yeU=",
+      "user_permissions": [],
+      "username": "admin"
+    },
+    "model": "auth.user",
+    "pk": 1
+  }
+]
