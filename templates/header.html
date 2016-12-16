@@ -17,13 +17,6 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="collapse navbar-collapse" id="readable-navbar-collapse">
                 <ul class="navigation">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact</a>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About</a>
-                    </li>
-                    <li class="divider"></li>
                     {% if user.is_authenticated %}
                         <li class="visible-sm visible-xs">
                             <a href="{% url 'logout' %}" class="dropdown-toggle" data-toggle="dropdown">Logout</a>
