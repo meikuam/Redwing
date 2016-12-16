@@ -134,6 +134,25 @@
     padding: 6px 15px;
 }
 
+.comment-review {
+    font-family: Lato;
+    margin: 5px 1px;
+}
+
+.comment-review form {
+    margin-top: 5px;
+}
+
+.comment-review select {
+    width: 150px;
+    height: 38px;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    position: relative;
+    top: -1px;
+}
+
 .login-container,
 .register-container {
     position: relative;
