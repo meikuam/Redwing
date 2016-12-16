@@ -8,7 +8,9 @@
                 {% for article in object_list %}
                     {% include 'article/article_list_item.html' with article=article %}
                 {% empty %}
-                    <li>No articles yet.</li>
+                    <div class="boxed no-articles-yet">
+                        No articles yet
+                    </div>
                 {% endfor %}
             </div>
         </div>
