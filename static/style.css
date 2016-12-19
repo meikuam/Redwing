@@ -6853,14 +6853,12 @@ body.search-mode .search-panel {
     }
 }
 
-.meta__container a:hover,
-.meta__container--without-image a:hover {
+.meta__container a:hover {
     border-bottom: 1px dotted #999
 }
 
 @media (min-width: 768px) {
-    .meta__container a:hover,
-    .meta__container--without-image a:hover {
+    .meta__container a:hover {
         border-bottom: 1px dotted #e4e4e4
     }
 }
@@ -6930,9 +6928,10 @@ body.search-mode .search-panel {
     color: #9a9a90
 }
 
-.meta__container--without-image a:hover {
+/* .meta__container--without-image a:hover {
     border-bottom: 1px dotted #9a9a90
 }
+*/
 
 .meta__quote {
     position: absolute;

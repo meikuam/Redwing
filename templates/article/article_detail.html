@@ -11,7 +11,7 @@
                            <span class="meta__author">
                             <img src="https://user-profile.s3.envato.com/files/50627171/avatar%20small.png"
                             alt="Meta avatar" width="30" height="30"> <a
-                            href="#">{{ object.author.username }}</a> in <a href="#">{{ object.category }}</a>
+                            >{{ object.author.username }}</a> in <a href="{{ article.category.get_absolute_url }}">{{ object.category }}</a>
                         </span>
                     </div>
                 </div>
